@@ -7,12 +7,30 @@ and not a mutated one  -->
 	import Button from './Button.svelte';
 	//lifecycle methods will not run in SSR except for onDestroy
 	import { createEventDispatcher, onMount, onDestroy, afterUpdate, beforeUpdate } from 'svelte';
+	import { scale,crossfade } from 'svelte/transition';
+	import { flip } from 'svelte/animate';
 
 	export let todos = null;
 	export let error = null;
 	export let isLoading = false;
 	export let disableAdding = false;
 	export let disabledItems = [];
+	export let scrollOnAdd = nudefined;
+
+	$: done = todos ? todos.filter(t=> t.completed) : []
+	$: todo = todos ? todos.filter(t=> !t.completed) : []
+
+	//for animating the two list when a todo is marked 
+	//completed
+	const [send,receive] = crossfade({
+		duration:400,
+
+		// fallback will run when element 
+		//is added or removed to individual lists 
+		fallback(node){
+			return scale(node,{start:0.5, duration:300})
+		}
+	});
 
 	export const readonly = 'read only';
 	let inputText = '';
@@ -22,6 +40,8 @@ and not a mutated one  -->
 	let prevTodos = todos;
 
 	$: {
+		//autoscroll is  a variable which ensures that we
+		//scroll only when an element is added to the list
 		autoScroll = todos && prevTodos && todos.length > prevTodos.length;
 		prevTodos = todos;
 	}
@@ -44,10 +64,16 @@ and not a mutated one  -->
 		console.log('afterUpdate');
 		if (listDiv) console.log('list container height', listDiv.offsetHeight);
 		//after adding new item scroll to end
-		if (autoScroll) {
-			listDiv.scrollTo(0, listDivScrollHeight);
-		}
+		if(scrollOnAdd){
+			let pos;
+			if(scrollOnAdd === 'top') pos= 0;
+			if(scrollOnAdd === 'bottom') pos= listDivScrollHeight;
+			if (autoScroll) {
+			listDiv.scrollTo(0, pos);
+		       }
 		autoScroll = false;
+		}
+
 	});
 
 	export function clearInput() {
@@ -95,18 +121,38 @@ and not a mutated one  -->
 				{#if todos.length === 0}
 					<p class="state-text">No todos yet</p>
 				{:else}
+				<div style:display="flex">
+					{#each [todo,done] as list, index}
+					<div class="list-wrapper">
+					<h2>{index === 0 ? 'Todo': "Done"}</h2>
 					<ul>
-						{#each todos as todo, index (todo.id)}
+						{#each list as todo, index (todo.id)}
 							<!-- if we need to use variable number at multiple places   -->
 							{@const number = index + 1}
 							{@const {id,completed,title} = todo}
 							<!-- {(console.log(title), '')} -->
 							<!-- {@debug id, title} -->
-							<li>
+
+						<!-- to use flip animation you must be in a list with key 
+							 and animate:flip should be direct child of each loop
+							flip stands for first last invert play-->
+							<li animate:flip={{duration:300}}>
 								<!-- passing data of slot from child to parent  -->
 								<!-- we can even pass functions to parent through slots  -->
 								<slot {todo} {handleToggleTodo} {number}>
-								<div class:completed>
+								
+								<!-- transition will run when element or it's 
+								parent is added or removed
+							local will ensure that animation will not run if parent 
+						is added or removed -->
+									<!-- <div 
+								class:completed
+								transition:scale|local={{start:0.5, duration:300}}> -->
+								<div 
+								class:completed
+								in:receive|local={{key:id}}
+								out:send|local={{key:id}}
+								>
 									<label>
 										<input
 											on:input={(event) => {
@@ -117,7 +163,7 @@ and not a mutated one  -->
 											checked={completed}
 											disabled={disabledItems.includes(id)}
 										/>
-										<slot name='title'>{number} - {title}</slot>
+										<slot name='title'>{title}</slot>
 										
 									</label>
 									<button
@@ -135,6 +181,9 @@ and not a mutated one  -->
 							</li>
 						{/each}
 					</ul>
+				</div>
+					{/each}
+				</div>
 				{/if}
 			</div>
 		</div>
@@ -167,11 +216,18 @@ and not a mutated one  -->
 			text-align: center;
 		}
 		.todo-list {
-			max-height: 200px;
+			max-height: 400px;
 			overflow: auto;
+			.list-wrapper{
+
+		padding:10px;
+		flex:1;
+		h2{
+			margin: 0 0 10px;
+		}
 			ul {
 				margin: 0;
-				padding: 10px;
+				padding: 0px;
 				list-style: none;
 				li > div {
 					
@@ -221,6 +277,7 @@ and not a mutated one  -->
 					}
 				}
 			}
+		}
 		}
 		.add-todo-form {
 			padding: 15px;
