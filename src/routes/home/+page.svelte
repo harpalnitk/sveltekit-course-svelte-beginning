@@ -10,6 +10,7 @@
     // onDestroy(unsubscribe);
 
     import tweened from '$lib/stores/tweened-store';
+    import spring from '$lib/stores/spring-store';
   </script>
 
 <h2>Home</h2>
@@ -52,12 +53,40 @@
     //if we need to do something after tweening completes
     //we can await the tweening function
     console.log('done');
-  }}>Random Box</button>
+  }}>Random Tweened Box</button>
 </div>
 
 
+
+<h1>Tweened Box</h1>
 <div style='width:{$tweened.width}px;height:{$tweened.height}px;
 background-color:{$tweened.color};
 transform : scale({$tweened.scale});
+transform-origin: 0 0'>
+</div>
+
+<div>
+  <button on:click={async ()=>{
+    await spring.update((values)=>({
+        ...values,
+         width: Math.random() * 500,
+         height: Math.random() * 500,
+
+    }),{
+      //hard means value will change immediately
+     // hard:true,
+      //soft 2s spring will take 2s to settle
+      soft:2
+    });
+    //if we need to do something after tweening completes
+    //we can await the tweening function
+    console.log('done');
+  }}>Random Spring Box</button>
+</div>
+
+<h1>Spring Box</h1>
+<div style='width:{$spring.width}px;height:{$spring.height}px;
+background-color:purple;
+transform : scale({$spring.scale});
 transform-origin: 0 0'>
 </div>
