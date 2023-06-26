@@ -16,6 +16,8 @@ in store we have same data across all application
 <section>
     <a href="/context/normal-form">Normal Form</a>
     <a href="/context/context-form">Context Form</a> 
+    <a href="/context/konva-imperative">Konva.js Imperative Way</a>
+    <a href="/context/konva-context">Konva.js Context Way</a>
 </section>
 
 <style>
