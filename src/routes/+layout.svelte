@@ -17,6 +17,7 @@
         <a href="/actions">Actions</a></li>
     <li><a href="/home">Home</a></li>
     <li><a href="/context">Context API</a></li>
+    <li><a href="/module-context">Module Context</a></li>
     <li><a href="/settings">Settings</a></li>
   </ul>
 </nav>

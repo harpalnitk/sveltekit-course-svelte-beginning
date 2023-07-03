@@ -1,5 +1,5 @@
-//derived store values depnd on other stores
-
+//derived store values depend on other stores
+e
 import {derived} from 'svelte/store';
 import settings from '$lib/stores/custom-store';
 import location from '$lib/stores/readable-store';

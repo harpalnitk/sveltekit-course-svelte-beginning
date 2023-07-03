@@ -1,12 +1,46 @@
+<script context='module'>
+	//To learn about module context
+	//var to keep track of number of buttons created
+	
+	let totalButtons = 0;
+
+	//context Module will not have ccess to the props of the
+	//component or it's State
+
+	//! Var in module context are not reactive
+	//first button created will show 1;
+	//when second button is created first will still show 1 
+	//while second will show 2
+
+	//To access this variable ouside of the button component
+
+	export function getTotalButtons(){
+		return totalButtons;
+	}
+</script>
+
+
+
 <script>
+	import { onDestroy } from "svelte";
+
 	export let size = 'small';
 	export let shadow = false;
     // inherit will use variable value defined in css file
 	export let bgColor = 'inherit';
 	export let textColor = 'inherit';
 	let isLeftHovered;
-</script>
+	totalButtons += 1;
 
+	onDestroy(()=>{
+		totalButtons -= 1;
+	})
+</script>
+<!--! Var in module context are not reactive
+first button created will show 1;
+when second button is created first will still show 1 
+while second will show 2 -->
+<!-- {totalButtons} -->
 <button
 	on:click
 	style:--buttonBgColor={bgColor}
