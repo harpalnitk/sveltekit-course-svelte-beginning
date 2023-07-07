@@ -13,16 +13,6 @@ separate context data
 
 in store we have same data across all application
 -->
-<section>
-    <a href="/context/normal-form">Normal Form</a>
-    <a href="/context/context-form">Context Form</a> 
-    <a href="/context/konva-imperative">Konva.js Imperative Way</a>
-    <a href="/context/konva-context">Konva.js Context Way</a>
-</section>
+<h1>Context API Home Page</h1>
 
-<style>
-    section{
-        display: flex;
-        flex-direction: column;
-    }
-</style>
+
