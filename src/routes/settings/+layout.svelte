@@ -10,7 +10,7 @@
 
 
 
-<h3>Settings for user : {data.user.name}</h3>
+<h3>Settings for user : {data?.user?.name}</h3>
  <div style:background='#b779d1' style:padding='10px'>
 <nav>
 <a href="/settings">Settings</a>

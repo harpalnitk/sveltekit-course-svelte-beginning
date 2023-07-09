@@ -1,6 +1,9 @@
 import { error,redirect } from '@sveltejs/kit';
 import type {PageServerLoad} from './$types';
 
+
+// this function will first run on page load and then only when any
+//of the input params change
 export const load: PageServerLoad = async ({params})=>{
 
 	const products = await (await import('$lib/data/dummy-products.json')).default;
