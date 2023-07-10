@@ -164,5 +164,39 @@ by default layouts inside sub-routes will inherit
 
   don't use localhost
 
+  # Hooks
+  two types
+  1. client hooks
+  2. Server hooks
+
+  ## environment variables
+  > echo %TEST%
+  >echo %PATH%
+
+
+  # server only files
+
+  in lib/server folder any js,ts file created
+  can only be imported in server files
+  create file secrets.ts
+
+  OR
+
+  in routes/products
+
+  create secret.server.ts file which can also only be imported in server 
+  components
+
+  # Pre Loading data
+  data-sveltekit-preload-data="hover"
+
+  on body tag in app.html file
+
+  # pre rendering
+  works both for pages and endpoints
+  e.g. see
+  /api/random-number
+  /users
+
 
 

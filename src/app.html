@@ -6,7 +6,10 @@
 		<meta name="viewport" content="width=device-width" />
 		%sveltekit.head%
 	</head>
-	<body data-sveltekit-preload-data="hover">
+	<!-- if in body tag then preload will be applied to all links 
+	or else it can be individually applied to each link -->
+	<!-- <body data-sveltekit-preload-data="hover"> -->
+		<body>
 		<div style="display: contents">%sveltekit.body%</div>
 	</body>
 </html>

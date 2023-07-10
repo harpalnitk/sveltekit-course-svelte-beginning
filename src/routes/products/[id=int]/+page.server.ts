@@ -11,7 +11,12 @@ export const load: PageServerLoad = async ({params})=>{
 
     // console.log(product);
     if(!product){
-        throw error(404,'Product not found');
+       // throw error(404,'Product not found'); //{$page.status}: {$page.error?.message}
+       //OR 
+       throw error(404,{
+        message:'Product not found!',
+        code:'NOT_FOUND'
+       });
 
         //throw redirect(301,'/products');
     }

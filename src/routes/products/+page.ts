@@ -4,6 +4,12 @@
 
 import type { PageLoad } from './$types';
 
+//! Acess environment variables
+import {env} from '$env/dynamic/public';
+
+//! import javascript files only on server
+//import {secret} from './secrets.server';  // will give error
+
 //type definitions does not give error in async functions
 export const load: PageLoad = async ({data,url,route,
 params,parent,fetch,depends,setHeaders}) => {

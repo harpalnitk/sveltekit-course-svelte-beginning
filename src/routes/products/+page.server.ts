@@ -10,6 +10,16 @@
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
+//! Acess environment variables
+import {env} from '$env/dynamic/private';
+import {API_KEY,Path} from '$env/static/private';
+
+import {env as publicEnv} from '$env/dynamic/public';
+
+//! import javascript files only on server
+import {secret} from './secrets.server';
+
+
 //type definitions does not give error in async functions
 export const load: PageServerLoad = async ({
 	parent,
@@ -25,6 +35,23 @@ export const load: PageServerLoad = async ({
 	setHeaders
 }) => {
 
+	//PRIVATE
+	//evaluated dynamically at run time
+	console.log('private Environment variable',env.API_KEY);
+	console.log(' Environment variable from process.env',env.TEST);
+
+	//evaluated during build time and injected in the code
+	console.log('static private Environment variable',API_KEY);
+	//console.log('static Environment variable from process.env',Path);
+
+	//PUBLIC
+	console.log('public Environment variable',publicEnv.PUBLIC_API_KEY);
+	console.log(' publicEnvironment variable from process.env',publicEnv.PUBLIC_TEST);
+
+	
+	
+	
+	
 	//data from layout is also available in pages and layouts
     //data from all parent layouts (including nested)
 	const parentData = await parent();
@@ -48,7 +75,7 @@ export const load: PageServerLoad = async ({
 		return { products:  res.json() }
 
 	}
-	// thismis our own error thrown from server.ts file
+	// this is our own error thrown from server.ts file
 	//and it will be in the body of the response
 	const errorJSON = await res.json()
 	throw error(res.status, errorJSON.message);
@@ -56,5 +83,6 @@ export const load: PageServerLoad = async ({
 	//const products = await (await import('$lib/data/dummy-products.json')).default;
 	//console.log(products);
 
-	;
+
+
 };

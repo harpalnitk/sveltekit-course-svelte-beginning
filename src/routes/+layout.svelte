@@ -41,8 +41,39 @@ like for settings URL we don't want any root layout -->
 				<li><a href="/home">Home</a></li>
 				<li><a href="/context">Context API</a></li>
 				<li><a href="/module-context">Module Context</a></li>
-				<li><a href="/products">Products</a></li>
+
+				<!-- attribute will run the load functions of the page as well as code 
+				on second time visiting the page it will only load the data
+			and not the code
+		second option is 'tap' i.e. when we click but not release the mouse
+	
+	if used in nav then if we want to switch off for some link then
+on that link use data-sveltekit-preload-data='off'
+
+data-sveltekit-preload-code='hover' will only load code and not data
+
+data-sveltekit-preload-code='eager' all the links on the page will be pre loaded
+without hover
+
+data-sveltekit-preload-code='viewport'  code will be loaded only when the
+link appears in viewport
+
+if links are rendered conditionally then viewport or eager will not work
+
+data-sveltekit-reload : client side navigation will not be used and 
+page will be refreshed
+
+data-sveltekit-noscroll: previous scroll position of page will be maintained
+in the new page
+
+also can be used conditionally using a variable e.g. noScroll
+
+data-sveltekit-noscroll ={noScroll ? '': 'off'}
+
+-->
+				<li><a href="/products" data-sveltekit-preload-data='hover'>Products</a></li>
 				<li><a href="/settings">Settings</a></li>
+				<li><a href="/users">Users</a></li>
 
 				<!-- it will not update until we refresh the page  -->
 				{#if !data.user}
@@ -75,6 +106,7 @@ like for settings URL we don't want any root layout -->
 	ul {
 		list-style: none;
 		display: flex;
+		flex-wrap: wrap;
 		li {
 			margin-left: 1rem;
 		}
