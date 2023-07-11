@@ -199,4 +199,21 @@ by default layouts inside sub-routes will inherit
   /users
 
 
+  entry in svelte.config.js file
+
+  	prerender:{
+		crawl:true,
+		entries:['/users','/api/random-number','/users/7']
+	}
+
+it will pr-render all pages inside entriws if they have exported constant pre-render set to true
+and also crawl any link pages inside these pages like /users/1
+which are also marked prerenderable
+
+we can also use 
+
+entries:[*]
+
+if crawl:false then individual users/1 pages will not be pre-rendered an d we will get an error during build time
+
 

@@ -1,13 +1,12 @@
 import type { PageLoad } from './$types';
 
-export const load = (async ({fetch}) => {
-	const res = await fetch('https://dummyjson.com/users');
+export const load:PageLoad = (async ({data,fetch}) => {
+	// const res = await fetch('https://dummyjson.com/users');
 
-    const users = await res.json();
+    // const users = await res.json();
 
-	return {
-		users
-	};
+	return { users: data.users,
+		title:'Users List' };
 }) satisfies PageLoad;
 
 
