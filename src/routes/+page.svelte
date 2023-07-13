@@ -5,7 +5,7 @@
 
     //gives information on the environment on which this page is running
     import {browser,building,dev,version} from '$app/environment';
-console.log({browser,building,dev,version});
+//console.log({browser,building,dev,version});
 //version is timestamp when app is built
 
 

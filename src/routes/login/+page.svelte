@@ -7,6 +7,9 @@
     let username = '';
     let password = '';
 
+
+    // if javascript is disabled this will not work
+    // another way of doing this is by formactions
     const login = async ()=>{
          const res = await fetch('/api/login',{
             method:'POST',

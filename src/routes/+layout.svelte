@@ -78,11 +78,15 @@ data-sveltekit-noscroll ={noScroll ? '': 'off'}
 				<!-- it will not update until we refresh the page  -->
 				{#if !data.user}
 					<li><a href="/login">Login</a></li>
+					<li><a href="/login-form-action">Login-Using-Form-Action</a></li>
 				{/if}
+
 			</ul>
 		</nav>
 		{#if data.user}
-			<button
+
+		<!-- using api -->
+			<!-- <button
 				on:click={async () => {
 					const res = await fetch('/api/logout', {
 						method: 'POST'
@@ -90,8 +94,14 @@ data-sveltekit-noscroll ={noScroll ? '': 'off'}
 					if (res.ok) {
 						await invalidateAll();
 					}
-				}}>Logout</button
-			>
+				}}>Logout</button> -->
+
+				<!-- using FORM ACTION -->
+
+				<form method='POST' action="/login-form-action?/logout&redirectTo={$page.url.pathname}">
+					<button type="submit">Logout</button>
+				</form>
+
 		{/if}
 
 		<h3>Root Layout</h3>
